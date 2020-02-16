@@ -1,0 +1,265 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsthm,bm,amsmath,enumerate,hyperref,cite}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+\title{On the analytical representability of so-called arbitrary functions of a real variable}
+\author{Karl Weierstrass\\(translated by Yujia Zhang)}
+%\date{Created February 2020}
+
+\begin{document}
+
+\maketitle
+\begin{abstract} 
+A crude translation of Weierstrass' original papers \textit{\"{U}ber die analytische Darstellbarkeit sogenannter willk\"{u}rlicher Functionen einer reellen Ver\"{a}nderlichen}
+\end{abstract}
+
+% Add Weierstrass' theorem and original proof. It comes in three steps: 
+% 1) Extend f to the whole real line (keeping it continuous and compact), making a function F. 
+% 2) Run the heat equation on F for a very small amount of time, making an entire function G. 
+% 3) Define p to be a truncated Taylor expansion of G such that ||p-G||<eps/2.
+
+\section*{First paper (\textit{Erste Mitteilung})}
+
+(7/9/1885)
+
+Let $f(x)$ be a real continuous function uniquely defined for every $x\in\mathbb{R}$ and suppose $f(x)$ has finite magnitude $|f(x)|$ for all $x$. Then the following equation holds, where $u$ is another real-valued variable and $k$ is a positive quantity independent of $x$ and $u$:
+\begin{equation}\label{1-1}
+\lim_{k\rightarrow 0}\frac{1}{k\sqrt{\pi}}\int_{-\infty}^{+\infty}f(u) e^{-(\frac{u-x}{k})^2}du = f(x).
+\end{equation}
+This statement is easy to generalize. Suppose $\psi(x)$ is any function of the same nature (\textit{Beschaffenheit}?) as $f(x)$, (\textit{welche ihr Zeichen nicht \"{a}ndert} - something about $\psi(x)$ not changing signs?), for which $\psi(x)=\psi(-x)$ holds and which satisfies the condition $\omega:=\int_0^{+\infty} \psi(x)dx$ is finite. Define $F(x,k)$ to be
+\begin{equation}
+F(x,k)=\frac{1}{2k\omega}\int_{-\infty}^{+\infty} f(u)\psi\left(\frac{u-x}{k}\right)du.
+\end{equation}
+Then 
+\begin{equation}\label{1-3}
+\lim_{k\rightarrow 0}F(x,k)=f(x).
+\end{equation}
+To prove Equations (\ref{1-1}) and (\ref{1-3}), the following observation needs to be made. Let $a_1,a_2,b_1,b_2$ be positive quantities such that $b_1>a_1$ and $b_2>a_2$, then
+\begin{align*}
+\frac{1}{k}\int_{-b_1}^{b_2}f(u)\psi\left(\frac{u-x}{k}\right)du-\frac{1}{k}\int_{-a_1}^{a_2}f(u)\psi\left(\frac{u-x}{k}\right)\\
+=\frac{1}{k}\int_{-b_1}^{-a_1}f(u)\psi\left(\frac{u-x}{k}\right)du+\frac{1}{k}\int_{a_2}^{b_2}f(u)\psi\left(\frac{u-x}{k}\right)du\\
+=f(-b_1\cdots -a_1)\int_{\frac{a_1+x}{k}}^{\frac{b_1+x}{k}}\psi(u)du + f(a_2\cdots b_2)\int_{\frac{a_2-x}{k}}^{\frac{b_2-x}{k}} \psi(u) du.\footnotemark
+\end{align*}
+\footnotetext{Here $f(x_1\cdots x_2)$ denotes an intermediate value between the smallest and largest value of $f(x)$ on $x\in[x_1,x_2]$.}
+Related to the assumptions made for the functions $f(x)$ and $\psi(x)$, this equation implies that, if one assigns specific values to $x,k$ and let $a_1,a_2$ become arbitrarily large independent of each other, the integral
+\begin{equation*}
+\frac{1}{k}\int_{-a_1}^{a_2} f(u)\psi\left(\frac{u-x}{k}\right)du
+\end{equation*}
+approaches a specific finite limit value. Therefore, the following integral has a well-defined value:
+\begin{equation*}
+\frac{1}{k}\int_{-\infty}^{+\infty} f(u)\psi\left(\frac{u-x}{k}\right)du.
+\end{equation*}
+Now that we have established the above, let $\delta$ be an arbitrarily small positive quantity, then
+\begin{equation*}
+\begin{split}
+F(x,k)&=\frac{1}{2k\omega}\int_{-\infty}^{x-\delta}f(u)\psi\left(\frac{u-x}{k}\right)du + \frac{1}{2k\omega}\int_{x+\delta}^{+\infty}f(u)\psi\left(\frac{u-x}{k}\right)du\\
+&\quad\quad+\frac{1}{2k\omega}\int_{x-\delta}^{x}f(u)\psi\left(\frac{u-x}{k}\right)du + \frac{1}{2k\omega}\int_{x}^{x+\delta}f(u)\psi\left(\frac{u-x}{k}\right)du\\
+&=\frac{1}{2\omega}f(-\infty\cdots x-\delta)\int_{\delta/k}^{+\infty}\psi(u)du+\frac{1}{2\omega}f(x+\delta\cdots +\infty)\int_{\delta/k}^{+\infty}\psi(u)du\\
+&\quad\quad+\frac{1}{2\omega}\int_{0}^{\delta/k}\left(f(x-ku)+f(x+ku)\right)\psi(u)du.
+\end{split}
+\end{equation*}
+Then it follows that
+\begin{equation}\label{1-Ffdiff}
+\begin{split}
+F(x,k)-f(x)&=\frac{f(-\infty\cdots +\infty)-f(x)}{\omega}\int_{\delta/k}^{\infty}\psi(u)du\\
+&\quad\quad +\frac{1}{2\omega}\int_{0}^{\delta/k} \left(f(x-ku)+f(x+ku)-2f(x) \right)\psi(u)du\\
+&=\frac{f(-\infty\cdots +\infty)-f(x)}{\omega}\int_{\delta/k}^{\infty}\psi(u)du\\
+&\quad\quad +\frac{1}{2}\omega_1 \left(f(x-\epsilon\delta)+f(x+\epsilon\delta)-2f(x) \right),
+\end{split}
+\end{equation}
+where $\epsilon,\epsilon_1$ are positive quantities between 0 and 1.
+
+Now let $x_1,x_2$ be two certain values of $x$, $G$ be the upper bound for the magnitude $|f(x)|$, and $g_1,g_2$ be two arbitrarily small positive quantities. Then, first of all, one can take $\delta$ sufficiently small such that, for $x\in(x_1,x_2)$ and $u\in(0,\delta)$, the absolute value of 
+\begin{equation*}
+\frac{1}{2}\left(f(x-u)+f(x+u)-2f(x) \right)
+\end{equation*}
+remains smaller than $g_1$. Moreoever, once we fix such a value of $\delta$, we can determine a positive $k'>0$ such that $\forall k<k'$,
+\begin{equation*}
+\frac{2G}{\omega}\int_{\delta/k}^{+\infty}\psi(u)du<g_2.
+\end{equation*}
+Thus by Equation (\ref{1-Ffdiff}), the absolute difference between $F(x,k)$ and $f(x)$ can be made smaller than $g_1+g_2$ for any value of $x$.
+
+Here, we have shown that not only does $F(x,k)$ converge to $f(x)$ for any specific value of $x$ when $k$ is infinitely small, but also that the convergence is uniform for all values of $x$ that belong to finite intervals.
+
+
+Now I draw a noteworthy conclusion from Equation (\ref{1-3}). 
+
+Among the functions $\psi(x)$ that satisfy the conditions posed above, there are infinitely many (? what does \textit{welche} mean here) transcendental entire functions whose associated functions $F(x,k)$ have continuously convergent (\textit{best\"{a}ndig convergierend}) power series in $x$ for every value of $k$. Let us take $\psi(x)$ to be such a function, e.g. $\psi(x)=e^{-x^2}$, then the following statement arises, which appears remarkable and fruitful to me:
+
+A. ``If $f(x)$ is a uniformly continuous function uniquely defined only for real values of $x$, then one can construct a transcendental entire function $F(x,k)$ in many different ways such that $F(x,k)$, apart from $x$, also includes a variable/alterable parameter $k>0$ and is constructed/configured (\textit{beschaffen?}) in a way such that for every real value of $x$, the following equation holds:
+\begin{equation}
+\lim_{k\rightarrow 0} F(x,k)=f(x)."
+\end{equation}
+Let $g'$ be arbitrarily small. Under the condition that the variable $x$ is confined to some finite interval, one can (as previously shown) assign a sufficiently small value $k'$ to the parameter $k$ such that $|F(x,k')-f(x)|<g'$ for every value of $x$. Thereupon let us represent $F(x,k')$ in the form of a power series
+\begin{equation*}
+    A_0+A_1x+A_2x^2+\cdots
+\end{equation*}
+and use $G(x)$ to denote the $n^{th}$ partial sum. Let $g''$ be another positive quantity. Then one can find $n$ sufficiently large such that $|F(x,k')-G(x)|<g''$ for every $x$ that belongs to the previously assumed finite interval. Therefore, with this construction, $|f(x)-G(x)|<g'+g''$. 
+
+Hence we have shown that:
+
+B. ``If $f(x)$ has the properties specified above and the variable $x$ is confined to some finite interval, then, assuming $g$ is an arbitrarily small positive quantity, there are many ways to determine an entire rational function $G(x)$ which approaches $f(x)$ so closely in this finite interval that $|f(x)-G(x)|$ is less than $g$ throughout."
+
+Now let us take two infinite positive sequences
+\begin{align*}
+a_1,a_2,a_3,\cdots\\
+g_1,g_2,g_3,\cdots
+\end{align*}
+such that $\lim_{n\rightarrow\infty}a_n=\infty$ and $\sum_{n=1}^{\infty} g_n$ has a finite value. Then according to the previous discussions, one can find a sequence of entire rational functions $G_1(x),G_2(x),G_3(x),\cdots$ such that, for $x\in(-a_\nu, a_\nu)$,
+\begin{equation*}
+|f(x)-G_\nu(x)|<g_\nu
+\end{equation*}
+for $\nu=1,2,\cdots,\infty$. Then let us set
+\begin{equation*}
+f_0(x)=G_1(x),f_\nu(x)=G_{\nu+1}(x)-G_\nu(x),
+\end{equation*}
+then 
+\begin{equation*}
+\sum_{\nu=0}^n f_\nu(x)=G_{n+1}(x),
+\end{equation*}
+and for every specific value of $x$,
+\begin{equation*}
+\lim_{n\rightarrow\infty} G_{n+1}(x)=f(x),
+\end{equation*}
+which implies
+\begin{equation*}
+f(x)=\sum_{\nu=0}^\infty f_\nu(x).
+\end{equation*}
+Now let $x_1,x_2$ be two specific finite values of $x$, then the inequalities
+\begin{align*}
+&|f(x)-G_\nu(x)|<g_\nu, (-a_\nu\leq x\leq a_\nu)\\
+&|f(x)-G_{\nu+1}(x)|<g_{\nu+1}, (-a_{\nu+1}\leq x\leq a_{\nu+1})
+\end{align*}
+imply that $\forall x\in(x_1,x_2)$,
+\begin{equation*}
+|f_\nu(x)|<g_\nu+g_{\nu+1},
+\end{equation*}
+as long as $\nu$ is larger than some $\nu'$, which is defined such that every interval $(-a_\nu, a_\nu)$ contains both $x_1,x_2$ for any $\nu>\nu'$. Then we have
+\begin{equation*}
+\sum_{\nu=\nu'+1}^\infty |f_\nu(x)|<\sum_{\nu=\nu'+1}^\infty (g_\nu+g_{\nu+1}), \text{ if }x_1\leq x\leq x_2;
+\end{equation*}
+hence the series 
+\begin{equation*}
+\sum_{\nu=\nu'+1}^\infty f_\nu(x)
+\end{equation*}
+and the series
+\begin{equation*}
+\sum_{\nu=0}^\infty f_\nu(x)
+\end{equation*}
+converge absolutely and uniformly for this $x\in(x_1,x_2)$. The choice of $x_1,x_2$ is subject to no other constraints than that they have finite real values, and the functions $f_\nu(x)$ are independent of them. So the previous series converge absolutely for every value of $x$ and uniformly in every interval $x\in[x_1,x_2]$ with finite endpoints. Thus the following theorem holds:
+
+C. ``Every function $f(x)$ with the properties specified above can be represented (in many ways) in the form of an infinite series whose terms are entire rational functions of $x$; this series converges absolutely for every finite value of $x$ and uniformly on every interval $(x_1,x_2)$ with finite endpoints."
+
+Regarding statement (B.) we should remark that, to justify this statement, we need only assume $\psi(x)$ to be a transcendental entire function that has the previously specified properties for real values of $x$, but not that $F(x,k)$ is also an entire function of $x$, which does not necessarily follow from the first assumption (\textit{was keine notwendige Folge der ersteren Annahme ist}).
+
+Let $a,b$ be two arbitrary real numbers and let 
+\begin{equation*}
+F_1(x,k)=\frac{1}{2k\omega}\int_a^b f(u)\psi\left(\frac{u-x}{k}\right)du.
+\end{equation*}
+Then for real $x$, we have
+\begin{equation*}
+F(x,k)=F_1(x,k)+\frac{1}{2\omega}\int_{\frac{x-a}{k}}^{+\infty} f(x-ku)\psi(u)du+\frac{1}{2\omega}\int_{\frac{b-x}{a}}^{+\infty}f(x+ku)\psi(u)du.\footnotemark
+\end{equation*}
+\footnotetext{I think the lower limit for the second integral should have $k$ on the denominator? - Yujia} 
+Assume $a<x_1<x_2<b$ and let $g_1$ be an arbitrarily small positive quantity, then we can fix the value $k$ such that $|f(x)-F_1(x,k)|<g_1\ \forall x\in(x_1,x_2)$. Given this, as long as $F_1(x,k)$ is unconditionally (?\textit{unbedingt}) a (transcendental) entire function of $x$, then for a second arbitrarily small positive $g_2$, we can find an entire rational function $G(x)$ such that for $x\in[x_1,x_2]$, 
+\begin{equation*}
+|G(x)-F_1(x,k)|<g_2,
+\end{equation*}
+and so 
+\begin{equation*}
+|f(x)-G(x)|<g_1+g_2,
+\end{equation*}
+which gives statement (B.). 
+
+I consider this proof of the statement in question to be perfectly rigorous and enough to show that such entire rational functions $G(x)$ that can approximate a given function $f(x)$ everywhere in an arbitrarily given interval $(x_1,x_2)$ as accurately as desired exist and can actually be determined. However, the above method of forming such functions has a crucial drawback/flaw. If we set
+\begin{equation*}
+F_1(x,k)=\sum_{\nu=0}^\infty (k)_\nu x^\nu,
+\end{equation*}
+where $(k)_\nu$ is a function of $k$ that admits the following representation
+\begin{equation*}
+(k)_\nu = \frac{(-1)^\nu}{\nu!\omega k^\nu}\int_{a/k}^{b/k}f(ku)\frac{d^\nu \psi(u)}{du^\nu}du,
+\end{equation*}
+and
+\begin{equation*}
+G^{(n)}(x,k)=\sum_{\nu=0}^{n-1}(k)_\nu x\nu.
+\end{equation*}
+Then for any given positive $\delta$, there admittedly exist values of $k$ and $n$ for which 
+\begin{equation*}
+|f(x)-G^{(n)}(x,k)|<\delta
+\end{equation*}
+holds for $x\in[x_1,x_2]$. However, if $\delta$ is infinitely small, then $k$ is also infinitely small. Then the trouble occurs: from the expression of $(k)_\nu$ above, we are not able to tell whether it approaches a finite limit value if $k$ is infinitely small, or whether it at least remains finite, which is absolutely necessary if the method in question is to yield a viable approximating expression to $f(x)$ for an arbitrarily small $\delta$. 
+
+I will show how to fix this trouble in a following paper.
+
+
+\newpage
+\section*{Second paper (\textit{Zweite Mitteilung})}
+
+(7/30/1885)
+
+As specified in the previous note presented on 7/9, we let $f(x)$ be a real-valued continuous function uniquely defined for every $x\in\mathbb{R}$ with absolute value bounded by $G$ ($|f(x)|<G$). On the other hand, let $\psi(x)$ be a transcendental entire function, for which it is assumed that it has real values for real $x$ and satisfies the condition $\psi(-x)=\psi(x)$. Furthermore, let $u,v\in\mathbb{R}$ be real variables independent of each other. Then we have
+\begin{equation*}
+\sqrt{\psi(u+vi)\psi(u-vi)}=\psi(u,v),
+\end{equation*}
+where the square root takes the positive value. Then the absolute value of $\frac{\psi(u+vi)}{\psi(u,v)}$ is exactly 1, and therefore we have, for $a,b\in\mathbb{R}$,
+\begin{equation*}
+\int_a^b f(u)\psi(u+vi)du=\int_a^b f(u)\frac{\psi(u+vi)}{\psi(u,v)}\psi(u,v)du=\epsilon G \int_a^b \psi(u,v)du,
+\end{equation*}
+where $\epsilon$ denotes a complex number with modulus less than 1. Assuming that $\psi(x)$ is configured in a such a way that the integral $\int_0^{+\infty}\psi(u,v)du$ has a finite value for every $v$, then for positive real numbers $a_1,a_2,b_1,b_2$ with $b_1>a_1$ and $b_2>a_2$, the integrals
+\begin{align*}
+&\int_{a_2}^{b_2}\psi(u,v)du,\\
+&\int_{-b_1}^{-a_1}\psi(u,v)du\ =\int_{a_1}^{b_1}\psi(u,v)du\quad(\text{since }\psi(-u,v)=\psi(u,v))
+\end{align*}
+both take infinitely small values if $a_1,b_1$ become infinitely large. Following the previous equation, the same also applies for the integrals 
+\begin{equation*}
+\int_{-b_1}^{-a_1}f(u)\psi(u+vi)du, \quad \int_{a_2}^{b_2}f(u)\psi(u+vi)du.
+\end{equation*}
+So the integral
+\begin{equation*}
+\int_{-\infty}^{+\infty} f(u)\psi(u+vi)du
+\end{equation*}
+has a certain finite value for every value of $x$.
+
+I will further assume that, if $a_2$ becomes infinitely large, the integral
+\begin{equation*}
+\int_{a_2}^{+\infty} \psi(u,v)dv
+\end{equation*}
+converges uniformly (\textit{gegen die Grenze Null}?) for all values of $x$ whose absolute value doesn't exceed an arbitrarily set threshold. Then, by Equation (1), the same statements applies to the integral
+\begin{equation*}
+\int_{a_2}^{+\infty} f(u)\psi(u+vi)du,
+\end{equation*}
+and similarly, if $a_1$ becomes infinitely large, to
+\begin{equation*}
+\int_{-\infty}^{-a_1} f(u)\psi(u+vi)du.
+\end{equation*}
+So if $V,g$ are given positive quantities where $V$ is arbitrarily large and $g$ is arbitrarily small, then one can always find two positive quantities $a_1,a_2$ such that, for every $v\in[-V,V]$, 
+\begin{equation*}
+\left|\int_{-\inf}^{+\inf} f(u)\psi(u+vi)dv-\int_{-a_1}^{a_2}f(u)\psi(u+vi)du\right|<g.
+\end{equation*}
+Now let $x=\xi+\xi'i$ be a complex variable, $k$ be a positive constant, and $\omega=\int_0^{+\infty}\psi(u)du$, as in the first paper. Then by the reasoning above, the integral
+\begin{equation}
+\frac{1}{2\omega}\int_{-\infty}^{+\infty}f(\xi+ku)\psi\left(u-\frac{\xi'i}{k}\right)du = \frac{1}{2k\omega}\int_{-\infty}^{+\infty}f(u)\psi\left(\frac{u-x}{k}\right)du
+\tag{\ref{1-1}}
+\end{equation}
+has a finite value that is uniquely defined for every finite $x$, which we denoted $F(x,k)$ in the previous paper.
+
+Now we need to prove that $F(x,k)$ is a transcendental entire function of $x$. 
+
+If we set an upper bound $r$ for the modulus of $x$, then given two arbitrarily small positive quantities $g', g''$, we can find $(a_1,a_2)$ such that
+\begin{equation*}
+\frac{1}{2\omega}\int_{-\infty}^{-a_1}f(\xi+ku)\psi\left(u-\frac{\xi'i}{k}\right)du + \frac{1}{2\omega}\int_{a_2}^{+\infty}f(\xi+ku)\psi\left(u-\frac{\xi'i}{k}\right)du<g'
+\end{equation*}
+for all $\xi,\xi'$ satisfying $\xi^2+\xi'^2\leq r^2$. Then we have
+\begin{equation*}
+F(x,k)=\frac{1}{2k\omega}\int_{-a_1}^{a_2}f(u)\psi\left(\frac{u-x}{k}\right)du+\epsilon'g',
+\end{equation*}
+where $\epsilon'$ is a number with absolute value less than 1. The integral on the right-hand-side of this equation can be written as a continuously convergent (\textit{best\"{a}ndig convergierend}) power series $\mathcal{P}(x)$. Let $G^{(n)}(x)$ denote the sum of the first $n$ terms in $\frac{1}{2k\omega}\mathcal{P}(x)$. Then $n$ can be taken sufficiently large such that for every value of $x$ with $|x|\leq r$,
+\begin{equation*}
+    |F(x,k)-G^{(n)}(x)|<g'+g''.
+\end{equation*}
+With this established, we can apply the same procedure that grounded statement (C.) in the first paper to show that $F(x,k)$ can be represented by an infinite series whose terms are entire rational functions of $x$, and that this series converges uniformly for all $x$ values contained in finite intervals. 
+\end{document}

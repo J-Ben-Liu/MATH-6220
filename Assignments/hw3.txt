@@ -1,0 +1,9 @@
+     Assignment 2
+
+Exercises from "Approximation Theory and Approximation Practice"
+
+Due at 10pm on Thursday 13th January. You submit the homework by sending an email to Max Helgren (meh249@cornell.edu) with a PDF attached. Make the subject of the email: "MATH6220, <your name>: HW1". 
+
+10.3, 10.12, 19.1, 19.7, 19.9, and read "A guide to writing mathematics" by Kevin Lee.
+
+I suspect this should take you 1 or 2 hours, not much more. Some of the other exercises are very useful and you may like to read and think about them.  

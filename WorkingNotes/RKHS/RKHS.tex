@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+%\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{amssymb,amsthm, amsmath}
+    \theoremstyle{definition}
+        \newtheorem{theorem}{Theorem}[section]
+        \newtheorem{lemma}[theorem]{Lemma}
+        \newtheorem{definition} [theorem] {Definition}
+        \newtheorem{proposition}[theorem]{Proposition}
+        \newtheorem{problem}[theorem]{Problem}
+        \newtheorem{assumption}[theorem]{Assumption}
+        \newtheorem{corollary}[theorem]{Corollary}
+        \newtheorem{example}[theorem]{Example}
+    \theoremstyle{remark}
+        \newtheorem*{remark}{Remark}
+        \newtheorem*{proof}{Proof}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\linspan}{span}
+
+\title{Reproducing kernel Hilbert spaces}
+\author{Alex Townsend\footnote{To be posted on the internet for the world to read at the end of the semester. Contributors to this document will become authors. Hopefully, this becomes a polymath-style working document for MATH6220 in Spring 2020.}}
+\date{Created January 2020, Updated January 2020}
+
+\begin{document}
+
+\maketitle
+\begin{abstract} 
+In this note we review reproducing kernel Hilbert spaces, positive definite kernels, and their applications. 
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction} % Introduce the differential operator theory
+
+We review reproducing kernel Hilbert spaces (RKHS), examples of positive definite kernels, and their applications. Given an arbitrary set $\Omega$, let $H$ be a Hilbert space of real-valued functions on $\Omega$. We say a symmetric function $K: \Omega \times \Omega \rightarrow \mathbb{R}$ is a \textbf{positive definite kernel} if
+
+\begin{equation}
+    \sum_{i, j = 1}^n c_i c_j K(x_i, x_j) \geq 0,
+\end{equation}
+
+for any $n \in \mathbb{N}, x_1, ..., x_n \in \Omega, c_1, ..., c_n \in \mathbb{R}$, with equality only for $c_1 = ... = c_n = 0$. It is equivalent to require the matrix
+
+\begin{equation*}
+    \begin{bmatrix}
+    K(x_1, x_1) & \dots & K(x_1, x_n) \\
+    \vdots & \ddots & \vdots \\
+    K(x_n, x_1) & \dots & K(x_n, x_n)
+\end{bmatrix}
+\end{equation*}
+
+%TODO: Add motivation for this definite
+be positive definite. K is a \textbf{reproducing kernel for the Hilbert space $H$} if and only if K is positive definite and
+
+\begin{equation}
+    f(x) = \langle f, K(\cdot, x) \rangle, \forall f \in H,
+\end{equation}
+
+where $\langle \cdot, \cdot \rangle$ is the inner-product defined on $H$. Intuitively, $K(\cdot, x)$ is an ``evaluation function" for the functions in $H$, similar to the dirac delta function $\delta(x)$.
+
+\section{Representer theorem}
+
+Given a kernel, the associated reproducing kernel Hilbert space contains functions with which we can approximate general functions. The challenge, though, is to find the best approximation in this potentially infinite-dimensional space. The representer theorem states that under mild conditions on the measure of goodness of approximation, the best approximation lies in the span of the kernels based at the finitely many data points. This turns the infinite-dimensional optimization to a finite-dimensional one.
+
+Here is the statement of the Representer theorem.
+
+\begin{theorem}
+Given 
+\begin{itemize}
+    \item training samples $x_1, ..., x_n \in \Omega$,
+    \item training values $y_1, ..., y_n \in \mathbb{R}$,
+    \item a hypothesis set (Hilbert space) H of functions $f: \Omega \to \mathbb{R}$,
+    \item an error function $E: (\Omega \times \mathbb{R} \times \mathbb{R})^n \to \mathbb{R} \cup \{\infty\}$ with arguments
+    $$(x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n)),$$ and
+    \item a strictly increasing function $g: [0, \infty) \to \mathbb{R}$,
+\end{itemize}
+then, for any RKHS $H$ with kernel $K$, any minimizer
+$$f^* = \argmin_{f \in H} \big[ E(..., (x_i, y_i, f(x_i)), ...) + g(\|f\|_H) \big]$$
+takes the form
+$$f^* = \linspan_{j = 1, ..., n} K(\cdot, x_j).$$
+\end{theorem}
+
+$x_i$'s and $y_i$'s may be thought of as observations of the independent and dependent variables, or features vectors and labels. In a machine learning setting, $x_i$ and $y_i$ may be an image and our confidence whether it is an image of a cat, respectively.
+
+$E + g$ may be thought of as the mesure of goodness of the approximation. $E$ is the fidelity term and may be thought of as a measure of the goodness of approximation $f(x_i)$'s to $y_i$'s, and $g$ is the regularization term and may be thought of a penalty of complexity of $f$.
+
+\begin{proof}
+The main idea is that $E$ term only depends on the projection $\tilde f$ of $f$ on the span of $K(\cdot, x_i)$'s, and orthogonality implies any residual $f - \tilde f$ will only increase the $g$ term. The details are as follows.
+
+For every $f \in H$
+$$f = \tilde f + v,$$
+where $$\tilde f = \sum \alpha _i K(\cdot, x_i) \in \linspan_{j = 1, ..., n} K(\cdot, x_j)$$
+and $v$ is orthogonal to every $K(\cdot, x_j)$. (This can be seen as a projection to a finite-dimensional subspace, or an application of Gram-Schmidt process.) It suffices to show $v = 0$ for $f_*$.
+
+By the reproducing property and orthogonality,
+$$f(x_j) = \langle f, K(\cdot, x_j) \rangle = \left \langle \sum \alpha _i K(\cdot, x_i), K(\cdot, x_j) \right \rangle = \sum \alpha_i K(x_i, x_j).$$
+
+Now, the arguments of $E$ only depends on $(x_i, y_i)$'s and $K(x_i, x_j)$'s, and does not depend on $v$.
+
+For $g(\|f\|_H)$, Pythagoras' theorem implies 
+$$\|f\|_H^2 = \|\tilde f\|^2 + \|v\|^2.$$
+Since $v$ does not change the term $E$, but increases the term $g$, $v$ has to be zero for $f^*$.
+\end{proof}
+
+\section{Positive definite kernels} % Definition of local operators
+[Add a big table listing kernels, there corresponding Hilbert space, and their associated norms]
+
+The following table lists several examples of positive definite kernels, along with their corresponding Hilbert spaces and norms. (Give more of an introduction here?)
+
+\begin{center}
+ \begin{tabular}{|c| c c c c|} 
+ \hline
+ \textbf{Kernel Name} & $\textbf{K(x,y)}$ & $\textbf{H}$ & \textbf{Norm} & \textbf{Notes}  \\ [1ex] 
+ \hline\hline
+ Linear & $x^Ty$ &  &  &\\ [1ex] 
+ \hline
+ Gaussian & $ e^{\frac{-||x-y ||^2}{2\sigma^2} }$ &  & & $\sigma > 0$\\[1ex] 
+ \hline
+ Laplacian &  $ e^{-\alpha ||x-y ||^2 }$  &  & & \\[1ex] 
+ \hline
+ Matérn & $||x-y ||^{k-\frac{d}{2}} B_{\frac{d}{2} - k}(||x-y ||^2)$  &  & & \\[1ex] 
+ \hline
+ More here &  &  & & \\ [1ex] 
+ \hline
+  And here &  &  & & \\ [1ex] 
+ \hline
+\end{tabular}
+
+\end{center}
+\caption{\textbf{Table 1}: A compilation of positive definite kernels, along with their corresponding Hilbert spaces and norms. } \\
+
+Note that $B$ denotes the Bessel function of the third kind, and that... \\
+
+One interesting property to note is that several of the above kernels (including the Gaussian, Laplacian, and Matérn kernels) only depend on the distance between $x$ and $y$. This leads to a property called \textbf{radial symmetry}...  (describe in more detail)\\
+
+\section{Scattered data interpolation} 
+
+\subsection{Applications to neural nets} 
+\end{document}
